@@ -1,0 +1,30 @@
+#prod version of configuration
+server:
+  port: 8083
+
+#database configuration
+
+spring:
+  datasource:
+    url:
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+#    show-sql: true
+
+#jwt config
+security:
+  jwt:
+    secret: ${JWT_SECRET:default}
+    issuer: ${JWT_ISSUER:api.vidyara.com}
+
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+
+    cookie-secure: true
+    cookie-domain: vidyara.com
+    cookie-same-site: strict

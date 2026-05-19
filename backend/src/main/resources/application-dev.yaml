@@ -1,0 +1,33 @@
+#dev version of configuration
+server:
+  port: 8081
+  servlet:
+    context-path: /api/v1
+
+#database configuration
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/vidyara
+    username: postgres
+    password: Postgresql@Om123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+#jwt security configuration
+security:
+  jwt:
+    secret: ${JWT_SECRET:dfufosdfpsioiu7d892rif89as&ioU8UFMOIVUIO_UYadi_D89F_89DFYUIDFYSUIAYDFUISDFOSDFHKSKDFJKJQEYIJUOasoUW89R}
+    issuer: ${JWT_ISSUER:api.vidyara.com}
+
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+
+    cookie-secure: false
+    cookie-http-only: true
+    cookie-same-site: lax

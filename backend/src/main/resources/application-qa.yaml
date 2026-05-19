@@ -1,0 +1,17 @@
+#test version of configuration
+
+server:
+  port: 8082
+
+#database configuration
+
+spring:
+  datasource:
+    url:
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+#    show-sql: true
+
