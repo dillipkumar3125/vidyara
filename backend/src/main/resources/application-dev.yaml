@@ -31,3 +31,8 @@ security:
     cookie-secure: false
     cookie-http-only: true
     cookie-same-site: lax
+
+#logging config
+logging:
+  level:
+    org.springframework.security: DEBUG

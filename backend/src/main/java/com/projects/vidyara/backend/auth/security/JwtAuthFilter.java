@@ -15,6 +15,8 @@ import org.jspecify.annotations.NonNull;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -33,9 +35,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService userDetailsService ;
     private final JwtService jwtService ;
 
-    @Autowired
-    private HandlerExceptionResolver handlerExceptionResolver ;
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
@@ -44,33 +43,31 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if(header != null && header.startsWith("Bearer ")) {
 
-                String token = header.split(" ")[1] ;
+                String token = header.substring(7);
 
                 Claims claims = jwtService.parse(token).getPayload() ;
                 SecurityUserDetails userDetails = (SecurityUserDetails) userDetailsService.loadUserByUsername(claims.getSubject());
 
-                if("access".equals(claims.get("typ"))) {
+                if(!"access".equals(claims.get("typ"))) throw new JwtException("Invalid Token Type") ;
 
-                    if(userDetails.isEnabled() && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if(userDetails.isEnabled() && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                        UsernamePasswordAuthenticationToken authentication =
-                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()) ;
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()) ;
 
-                        authentication.setDetails(
-                                new WebAuthenticationDetailsSource()
-                                        .buildDetails(request));
+                    authentication.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request));
 
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
-
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
 
             }
-        } catch (JwtException e) {
-            handlerExceptionResolver.resolveException(request,response,null,e) ;
+
+        } catch(JwtException e) {
+            SecurityContextHolder.clearContext();
+            throw new BadCredentialsException(e.getMessage()) ;
         }
-
         filterChain.doFilter(request,response);
-
     }
 }

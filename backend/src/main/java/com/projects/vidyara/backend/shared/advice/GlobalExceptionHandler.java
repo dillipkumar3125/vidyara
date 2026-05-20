@@ -1,8 +1,10 @@
 package com.projects.vidyara.backend.shared.advice;
 
 import com.projects.vidyara.backend.shared.exception.ResourceNotFoundException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,6 +17,24 @@ public class GlobalExceptionHandler {
                 .message(exception.getMessage())
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .build() ;
+        return exceptionToResponse(apiException) ;
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse<?>> jwtExceptionHandler(JwtException exception) {
+        ApiException apiException = ApiException.builder()
+                .message(exception.getMessage())
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .build();
+        return exceptionToResponse(apiException) ;
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<?>> accessDeniedExceptionHandler(AccessDeniedException exception) {
+        ApiException apiException = ApiException.builder()
+                .message(exception.getMessage())
+                .httpStatus(HttpStatus.FORBIDDEN)
+                .build();
         return exceptionToResponse(apiException) ;
     }
 

@@ -1,5 +1,7 @@
 package com.projects.vidyara.backend.auth.controller;
 
+import com.projects.vidyara.backend.auth.dto.LoginRequestDto;
+import com.projects.vidyara.backend.auth.dto.LoginResponseDto;
 import com.projects.vidyara.backend.auth.dto.UserDto;
 import com.projects.vidyara.backend.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,12 @@ public class AuthController {
     public ResponseEntity<UserDto> signupUser(@RequestBody UserDto userDto) {
         UserDto userDto1 = authService.signupUser(userDto) ;
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED) ;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
+        LoginResponseDto responseDto = authService.loginUser(loginRequestDto) ;
+        return ResponseEntity.ok(responseDto) ;
     }
 
 }
