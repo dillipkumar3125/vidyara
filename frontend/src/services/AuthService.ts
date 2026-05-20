@@ -6,7 +6,7 @@ import type User from "@/models/User";
 
 // backend: POST /auth/register
 export const registerUser = async (signupData: RegisterData) => {
-  const response = await apiClient.post(`/auth/register`, signupData);
+  const response = await apiClient.post(`/auth/signup`, signupData);
   return response.data;
 };
 

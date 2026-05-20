@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const apiClient = axios.create({
   // backend
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8083/api/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/api/v1",
   headers: {
     "Content-Type": "application/json",
   },

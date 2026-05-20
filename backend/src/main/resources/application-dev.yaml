@@ -36,3 +36,8 @@ security:
 logging:
   level:
     org.springframework.security: DEBUG
+
+#cors config
+app:
+  cors:
+    front-end-url: http://localhost:5173
