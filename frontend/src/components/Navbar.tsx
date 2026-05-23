@@ -4,7 +4,6 @@ import useAuth from "@/auth/store";
 
 function Navbar() {
   const checkLogin = useAuth((state: any) => state.checkLogin);
-  const user = useAuth((state: any) => state.user);
   const logout = useAuth((state: any) => state.logout);
   const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ function Navbar() {
               to={"/dashboard/profile"}
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              {user?.name || "Profile"}
+              Profile
             </NavLink>
 
             <Button

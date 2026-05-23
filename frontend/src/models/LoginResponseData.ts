@@ -1,8 +1,4 @@
-import type User from "./User";
-
 export default interface LoginResponseData {
   accessToken: string;
-  user: User;
-  refreshToken: string;
-  expiresIn: number;
+  expiresIn?: number; // seconds until token expiry (optional from backend)
 }

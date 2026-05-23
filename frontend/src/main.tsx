@@ -13,6 +13,11 @@ import Userhome from "./pages/users/Userhome.tsx";
 import Userprofile from "./pages/users/Userprofile.tsx";
 import OAuthSuccess from "./pages/OAuthSuccess.tsx";
 import OAuthFailure from "./pages/OAuthFailure.tsx";
+import CommunityForum from "./pages/users/CommunityForum.tsx";
+import Certificates from "./pages/users/Certificates.tsx";
+import EduAI from "./pages/users/EduAI.tsx";
+import KnowledgeGraph from "./pages/users/KnowledgeGraph.tsx";
+import StudyMaterials from "./pages/users/StudyMaterials.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -26,6 +31,11 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/dashboard" element={<Userlayout />}>
           <Route index element={<Userhome />} />
           <Route path="profile" element={<Userprofile />} />
+          <Route path="community-forum" element={<CommunityForum />} />
+          <Route path="certificates" element={<Certificates />} />
+          <Route path="eduai" element={<EduAI />} />
+          <Route path="knowledge-graph" element={<KnowledgeGraph />} />
+          <Route path="study-materials" element={<StudyMaterials />} />
         </Route>
         <Route path="oauth/success" element={<OAuthSuccess />} />
         <Route path="oauth/failure" element={<OAuthFailure />} />

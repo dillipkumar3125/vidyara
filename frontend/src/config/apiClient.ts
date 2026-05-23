@@ -65,11 +65,7 @@ apiClient.interceptors.response.use(
       if (!newToken) throw new Error("no access token received");
       useAuth
         .getState()
-        .changeLocalLoginData(
-          loginResponse.accessToken,
-          loginResponse.user,
-          true
-        );
+        .changeLocalLoginData(loginResponse.accessToken, true);
       resolveQueue(newToken);
       original.headers.Authorization = `Bearer ${newToken}`;
       return apiClient(original);

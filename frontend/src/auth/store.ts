@@ -1,6 +1,5 @@
 import type LoginData from "@/models/LoginData";
 import type LoginResponseData from "@/models/LoginResponseData";
-import type User from "@/models/User";
 import { loginUser, logoutUser } from "@/services/AuthService";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -9,7 +8,6 @@ const LOCAL_KEY = "app_state";
 
 type AuthState = {
   accessToken: string | null;
-  user: User | null;
   authStatus: boolean;
   authLoading: boolean;
   login: (loginData: LoginData) => Promise<LoginResponseData>;
@@ -17,7 +15,6 @@ type AuthState = {
   checkLogin: () => boolean | undefined;
   changeLocalLoginData: (
     accessToken: string,
-    user: User,
     authStatus: boolean
   ) => void;
 };
@@ -26,12 +23,11 @@ const useAuth = create<AuthState>()(
   persist(
     (set, get) => ({
       accessToken: null,
-      user: null,
       authStatus: false,
       authLoading: false,
 
-      changeLocalLoginData: (accessToken, user, authStatus) => {
-        set({ accessToken, user, authStatus });
+      changeLocalLoginData: (accessToken, authStatus) => {
+        set({ accessToken, authStatus });
       },
 
       login: async (loginData) => {
@@ -40,7 +36,6 @@ const useAuth = create<AuthState>()(
           const loginResponseData = await loginUser(loginData);
           set({
             accessToken: loginResponseData.accessToken,
-            user: loginResponseData.user,
             authStatus: true,
           });
           return loginResponseData;
@@ -61,7 +56,6 @@ const useAuth = create<AuthState>()(
         }
         set({
           accessToken: null,
-          user: null,
           authLoading: false,
           authStatus: false,
         });
@@ -69,7 +63,7 @@ const useAuth = create<AuthState>()(
 
       checkLogin: () => {
         if (get().accessToken && get().authStatus) return true;
-        else false;
+        else return false;
       },
     }),
     { name: LOCAL_KEY }

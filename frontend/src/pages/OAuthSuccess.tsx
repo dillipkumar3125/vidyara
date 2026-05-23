@@ -20,7 +20,6 @@ function OAuthSuccess() {
           const responseLoginData = await refreshToken();
           changeLocalLoginData(
             responseLoginData.accessToken,
-            responseLoginData.user,
             true
           );
           toast.success("Login success !");
