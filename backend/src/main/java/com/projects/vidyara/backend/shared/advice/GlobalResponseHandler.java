@@ -18,7 +18,24 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public @Nullable Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+
+        String path = request.getURI().getPath();
+
+        // Exclude Swagger/OpenAPI endpoints
+        if (path.startsWith("/v3/api-docs")
+                || path.startsWith("/swagger-ui")
+                || path.contains("swagger")) {
+            return body;
+        }
         if(body instanceof ApiResponse<?>) return body ;
+
+        // Exclude raw byte responses
+        if (body instanceof byte[]) return body;
+
+        // Exclude String responses
+        if (body instanceof String) return body;
+
+
         return new ApiResponse<>(body) ;
     }
 }

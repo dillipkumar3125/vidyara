@@ -8,9 +8,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/vidyara
-    username: postgres
-    password: Postgresql@Om123
+    url: jdbc:postgresql://ep-shy-rain-aqrm2jzh-pooler.c-8.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_5cAXpm2HuoDP&sslmode=require&channelBinding=require
+#    url: jdbc:postgresql://127.0.0.1:5432/vidyara
+#    username: postgres
+#    password: Postgresql@Om123
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,15 +23,14 @@ security:
   jwt:
     secret: ${JWT_SECRET:dfufosdfpsioiu7d892rif89as&ioU8UFMOIVUIO_UYadi_D89F_89DFYUIDFYSUIAYDFUISDFOSDFHKSKDFJKJQEYIJUOasoUW89R}
     issuer: ${JWT_ISSUER:api.vidyara.com}
-
     access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
     refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
 
+  cookie:
     refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
-
-    cookie-secure: false
-    cookie-http-only: true
-    cookie-same-site: lax
+    secure: false
+    http-only: true
+    same-site: lax
 
 #logging config
 logging:
@@ -39,5 +39,5 @@ logging:
 
 #cors config
 app:
-  cors:
     front-end-url: http://localhost:5173
+    domain: ${DOMAIN:localhost}

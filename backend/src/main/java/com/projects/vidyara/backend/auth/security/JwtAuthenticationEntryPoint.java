@@ -32,9 +32,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ApiResponse<?> apiResponse = new ApiResponse<>(apiException) ;
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
         response.setContentType("application/json");
-        response.getWriter().write(
-                objectMapper.writeValueAsString(apiResponse)
-        );
+        response.getOutputStream()
+                .write(objectMapper.writeValueAsBytes(apiResponse));
     }
 }

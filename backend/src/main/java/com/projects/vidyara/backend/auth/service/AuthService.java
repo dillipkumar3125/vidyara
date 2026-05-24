@@ -1,13 +1,18 @@
 package com.projects.vidyara.backend.auth.service;
 
 import com.projects.vidyara.backend.auth.dto.LoginRequestDto;
-import com.projects.vidyara.backend.auth.dto.LoginResponseDto;
 import com.projects.vidyara.backend.auth.dto.UserDto;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
     //resister user
     UserDto signupUser(UserDto userDto) ;
 
-    LoginResponseDto loginUser(LoginRequestDto requestDto) ;
+    String[] loginUser(LoginRequestDto requestDto) ;
+
+    String[] refreshUser(HttpServletRequest request, HttpServletResponse response) ;
+
+    void logoutUser(HttpServletRequest request,HttpServletResponse response);
 }
 

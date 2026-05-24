@@ -84,6 +84,14 @@ public class JwtService {
                 .parseSignedClaims(token) ;
     }
 
+    public long accessTtlSeconds() {
+        return accessTtlSeconds ;
+    }
+
+    public long refreshTtlSeconds() {
+        return refreshTtlSeconds ;
+    }
+
     public String getEmail(String token) {
         Claims claims = parse(token).getPayload() ;
         return claims.getSubject() ;
@@ -103,6 +111,11 @@ public class JwtService {
     public UUID getUserId(String token) {
         Claims claims = parse(token).getPayload() ;
         return UuidUtil.parseUUID(claims.get("userId").toString());
+    }
+
+    public String getJti(String token) {
+        Claims claims = parse(token).getPayload() ;
+        return claims.getId() ;
     }
 
 }

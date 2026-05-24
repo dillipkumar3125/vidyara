@@ -1,5 +1,6 @@
 package com.projects.vidyara.backend.auth.security;
 
+import com.projects.vidyara.backend.shared.constants.AuthConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,7 @@ public class SecurityConfig {
                         ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**","/error").permitAll()
+                        .requestMatchers(AuthConstants.AUTH_PUBLIC_URLS).permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
