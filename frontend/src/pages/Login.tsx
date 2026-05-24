@@ -21,7 +21,7 @@ function Login() {
   const [error, setError] = useState<any>(null);
 
   const navigate = useNavigate();
-  const login = useAuth((state: any) => state.login);
+  const login = useAuth((state) => state.login);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({
@@ -133,7 +133,7 @@ function Login() {
                 name="email"
                 value={loginData.email}
                 onChange={handleInputChange}
-                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm bg-white transition-[border-color,box-shadow] duration-200"
+                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm text-black bg-white transition-[border-color,box-shadow] duration-200"
               />
             </div>
 
@@ -148,7 +148,7 @@ function Login() {
                 name="password"
                 value={loginData.password}
                 onChange={handleInputChange}
-                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm bg-white transition-[border-color,box-shadow] duration-200"
+                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm text-black bg-white transition-[border-color,box-shadow] duration-200"
               />
             </div>
 

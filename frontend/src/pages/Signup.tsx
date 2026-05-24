@@ -119,7 +119,7 @@ function Signup() {
                 name="name"
                 value={data.name}
                 onChange={handleInputChange}
-                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm bg-white transition-[border-color,box-shadow] duration-200"
+                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm text-black bg-white transition-[border-color,box-shadow] duration-200"
               />
             </div>
 
@@ -134,7 +134,7 @@ function Signup() {
                 name="email"
                 value={data.email}
                 onChange={handleInputChange}
-                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm bg-white transition-[border-color,box-shadow] duration-200"
+                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm text-black bg-white transition-[border-color,box-shadow] duration-200"
               />
             </div>
 
@@ -149,7 +149,7 @@ function Signup() {
                 name="password"
                 value={data.password}
                 onChange={handleInputChange}
-                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm bg-white transition-[border-color,box-shadow] duration-200"
+                className="h-11 rounded-[10px] border-[1.5px] border-[#d1d5db] px-3.5 text-sm text-black bg-white transition-[border-color,box-shadow] duration-200"
               />
             </div>
 

@@ -38,8 +38,9 @@ apiClient.interceptors.response.use(
   async (error: any) => {
     const is401 = error.response?.status === 401;
     const original = error.config;
+    const isAuthLoginOrRefresh = original.url?.includes("/auth/login") || original.url?.includes("/auth/refresh");
 
-    if (!is401 || original._retry) {
+    if (!is401 || original._retry || isAuthLoginOrRefresh) {
       if (error.response && error.response.data)
         toast.error(error.response.data?.message || "An error occurred");
       return Promise.reject(error);
