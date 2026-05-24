@@ -2,14 +2,14 @@ package com.projects.vidyara.backend.shared.constants;
 
 public class AuthConstants {
     public static final String[] AUTH_PUBLIC_URLS = {
-            "/api/v1/auth/**",
+            "/auth/**",
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/swagger-ui/**"
     };
 
     public static final String[] AUTH_ADMIN_URLS= {
-            "/api/v1/users/**"
+            "/users/**"
     };
 
     public static final String[] AUTH_GUEST_URLS= {
