@@ -3,6 +3,7 @@ package com.projects.vidyara.backend.auth.controller;
 import com.projects.vidyara.backend.auth.dto.LoginRequestDto;
 import com.projects.vidyara.backend.auth.dto.LoginResponseDto;
 import com.projects.vidyara.backend.auth.dto.UserDto;
+import com.projects.vidyara.backend.auth.security.SecurityUserDetails;
 import com.projects.vidyara.backend.auth.service.AuthService;
 import com.projects.vidyara.backend.auth.service.impl.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/auth")
@@ -63,6 +61,12 @@ public class AuthController {
         SecurityContextHolder.clearContext();
         cookieService.clearResponseCookie(response);
         cookieService.addNoStoreHeaders(response);
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<SecurityUserDetails> getCurrentUser() {
+        SecurityUserDetails userDetails = authService.getCurrentUser() ;
+        return ResponseEntity.ok(userDetails) ;
     }
 
 }

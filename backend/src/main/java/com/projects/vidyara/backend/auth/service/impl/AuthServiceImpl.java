@@ -20,6 +20,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -148,6 +149,16 @@ public class AuthServiceImpl implements AuthService {
                 }
 
         });
+    }
+
+    @Override
+    public SecurityUserDetails getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext()
+                        .getAuthentication();
+
+        if(authentication == null) throw new JwtException("User is not Login") ;
+
+        return (SecurityUserDetails) authentication.getPrincipal();
     }
 
 
