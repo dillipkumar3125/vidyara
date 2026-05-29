@@ -12,49 +12,49 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/forum/question")
+@RequestMapping("/forum/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionService questionService;
 
     @PostMapping
-    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto) {
+    public ResponseEntity<QuestionDto> createQuestion(
+            @RequestBody QuestionDto questionDto) {
 
-        QuestionDto createdQuestion = questionService.createQuestion(questionDto);
-
-        return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(questionService.createQuestion(questionDto));
     }
 
     @GetMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> getQuestionById(@PathVariable UUID id) {
+    public ResponseEntity<QuestionDto> getQuestionById(
+            @PathVariable UUID questionId) {
 
-        QuestionDto question = questionService.getQuestionById(id);
-
-        return ResponseEntity.ok(question);
+        return ResponseEntity.ok(questionService.getQuestionById(questionId));
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestionDto>> getAllQuestion() {
+    public ResponseEntity<List<QuestionDto>> getAllQuestions() {
 
-        List<QuestionDto> questions = questionService.getAllQuestion();
-
-        return ResponseEntity.ok(questions);
+        return ResponseEntity.ok(questionService.getAllQuestions());
     }
+
 
     @PutMapping("/{questionId}")
     public ResponseEntity<QuestionDto> updateQuestion(
             @PathVariable UUID questionId,
-            @RequestBody QuestionDto questionDto
-    ) throws AccessDeniedException {
+            @RequestBody QuestionDto questionDto) {
 
-        QuestionDto updatedQuestion = questionService.updateQuestion(questionId, questionDto);
-
-        return ResponseEntity.ok(updatedQuestion);
+        return ResponseEntity.ok(
+                questionService.updateQuestion(questionId, questionDto));
     }
 
     @DeleteMapping("/{questionId}")
-    public void deleteQuestion(@PathVariable UUID questionId) throws AccessDeniedException {
+    public ResponseEntity<Void> deleteQuestion(
+            @PathVariable UUID questionId) {
+
         questionService.deleteQuestion(questionId);
+        return ResponseEntity.noContent().build();
     }
 }

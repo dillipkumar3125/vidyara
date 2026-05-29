@@ -7,12 +7,12 @@ import com.projects.vidyara.backend.forum.mapper.QuestionMapper;
 import com.projects.vidyara.backend.forum.repository.QuestionRepository;
 import com.projects.vidyara.backend.forum.service.QuestionService;
 import com.projects.vidyara.backend.shared.exception.ResourceNotFoundException;
-import io.jsonwebtoken.JwtException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -45,7 +45,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> getAllQuestion() {
+    public List<QuestionDto> getAllQuestions() {
         List<Question> questions = questionRepository.findAll() ;
 
         return questions
@@ -55,30 +55,41 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<QuestionDto> getAllQuestionsOfUser(UUID userId) {
+        List<Question> questions = questionRepository.findByUserId(userId) ;
+        return questions.stream()
+                .map(mapper::toDto)
+                .toList() ;
+    }
+
+    @Override
     @Transactional
-    public QuestionDto updateQuestion(UUID id, QuestionDto questionDto) throws AccessDeniedException {
+    public QuestionDto updateQuestion(UUID id, QuestionDto questionDto) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("There is no question with Id: " + id));
-        UUID userId = question.getUserId() ;
-        UUID currentUserId = Objects.requireNonNull(authController.getCurrentUser().getBody()).getUser().getId();
 
-        if(currentUserId != userId) throw new AccessDeniedException("This is NOT your Question") ;
+        checkAccess(question);
 
         question.setHeading(questionDto.getHeading());
-        question.setContent(question.getContent());
+        question.setContent(questionDto.getContent());
+        question.setUpdatedAt(Instant.now());
 
         return mapper.toDto(question) ;
     }
 
     @Override
-    public void deleteQuestion(UUID id) throws AccessDeniedException {
+    public void deleteQuestion(UUID id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("There is no question with Id: " + id));
-        UUID userId = question.getUserId() ;
-        UUID currentUserId = Objects.requireNonNull(authController.getCurrentUser().getBody()).getUser().getId();
 
-        if(currentUserId != userId) throw new AccessDeniedException("This is NOT your Question") ;
+        checkAccess(question);
 
         questionRepository.delete(question);
+    }
+
+    private void checkAccess(Question question) {
+        UUID userId = question.getUserId() ;
+        UUID currentUserId = Objects.requireNonNull(authController.getCurrentUser().getBody()).getUser().getId();
+        if(!currentUserId.equals(userId)) throw new AccessDeniedException("This is NOT your Question") ;
     }
 }

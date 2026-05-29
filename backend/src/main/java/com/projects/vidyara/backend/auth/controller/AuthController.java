@@ -54,13 +54,15 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Void> logoutUser(HttpServletRequest request, HttpServletResponse response) {
 
         authService.logoutUser(request, response); ;
 
         SecurityContextHolder.clearContext();
         cookieService.clearResponseCookie(response);
         cookieService.addNoStoreHeaders(response);
+
+        return ResponseEntity.noContent().build() ;
     }
 
     @GetMapping("/current-user")
