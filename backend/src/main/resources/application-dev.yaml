@@ -1,8 +1,14 @@
-#dev version of configuration
+#dev version of configuration  and Multipart file setting
 server:
   port: 8081
   servlet:
     context-path: /api/v1
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      file-size-threshold: 1KB
+
 
 #database configuration
 
@@ -42,3 +48,5 @@ logging:
 app:
     front-end-url: http://localhost:5173
     domain: ${DOMAIN:localhost}
+    file-store-url: ${FILE_STORE_URL:src/main/resources/files}
+
