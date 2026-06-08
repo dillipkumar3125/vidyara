@@ -1,14 +1,29 @@
 import { Button } from "./ui/button";
 import { NavLink, useNavigate } from "react-router";
 import useAuth from "@/auth/store";
+import { useState, useEffect } from "react";
+import { Sun, Moon } from "lucide-react";
 
 function Navbar() {
   const checkLogin = useAuth((state: any) => state.checkLogin);
   const logout = useAuth((state: any) => state.logout);
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(() => 
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
+
+  const toggleTheme = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      setIsDarkMode(true);
+    }
+  };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 flex flex-row justify-between items-center bg-background/50 backdrop-blur-md border-b border-border/40 transition-all">
+    <nav className="fixed top-0 left-0 w-full z-50 py-4 px-6 md:px-12 flex flex-row justify-between items-center bg-background/80 backdrop-blur-md border-b border-border/40 transition-all">
       {/* Brand */}
       <NavLink to={"/"} className="font-bold text-xl tracking-tight flex items-center gap-2 hover:opacity-80 transition-opacity">
         <span className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/50 text-primary-foreground shadow-lg shadow-primary/20">
@@ -21,11 +36,21 @@ function Navbar() {
 
       {/* Navigation Links */}
       <div className="flex gap-4 items-center">
+        {/* Theme Toggle */}
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={toggleTheme} 
+          className="rounded-full w-9 h-9 border border-border/50 bg-background/50"
+        >
+          {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </Button>
+
         {checkLogin() ? (
           <>
             <NavLink 
               to={"/dashboard/profile"}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
             >
               Profile
             </NavLink>
@@ -53,7 +78,7 @@ function Navbar() {
             <NavLink to={"/login"}>
               <Button
                 size={"sm"}
-                className="cursor-pointer rounded-full px-5 border-border/50 hover:bg-muted/50"
+                className="cursor-pointer rounded-full px-5 border-border/50 hover:bg-muted/50 hidden sm:flex"
                 variant={"ghost"}
               >
                 Sign In

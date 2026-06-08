@@ -15,7 +15,7 @@ import OAuthSuccess from "./pages/OAuthSuccess.tsx";
 import OAuthFailure from "./pages/OAuthFailure.tsx";
 import CommunityForum from "./pages/users/CommunityForum.tsx";
 import Certificates from "./pages/users/Certificates.tsx";
-import EduAI from "./pages/users/EduAI.tsx";
+import Vidyara from "./pages/users/Vidyara.tsx";
 import KnowledgeGraph from "./pages/users/KnowledgeGraph.tsx";
 import StudyMaterials from "./pages/users/StudyMaterials.tsx";
 
@@ -33,7 +33,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="profile" element={<Userprofile />} />
           <Route path="community-forum" element={<CommunityForum />} />
           <Route path="certificates" element={<Certificates />} />
-          <Route path="eduai" element={<EduAI />} />
+          <Route path="vidyara" element={<Vidyara />} />
           <Route path="knowledge-graph" element={<KnowledgeGraph />} />
           <Route path="study-materials" element={<StudyMaterials />} />
         </Route>
