@@ -14,10 +14,10 @@ server:
 
 spring:
   datasource:
-#    url: jdbc:postgresql://ep-shy-rain-aqrm2jzh-pooler.c-8.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_5cAXpm2HuoDP&sslmode=require&channelBinding=require
-    url: jdbc:postgresql://127.0.0.1:5432/vidyara
-    username: postgres
-    password: Postgresql@Om123
+    url: ${DB_URL}
+#    url: jdbc:postgresql://127.0.0.1:5432/vidyara
+#    username: postgres
+#    password: Postgresql@Om123
   jpa:
     hibernate:
       ddl-auto: update
@@ -50,3 +50,9 @@ app:
     domain: ${DOMAIN:localhost}
     file-store-url: ${FILE_STORE_URL:src/main/resources/files}
 
+cloudflare:
+  r2:
+    account-id: ${R2_ACCOUNT_ID}
+    access-key: ${R2_ACCESS_KEY}
+    secret-key: ${R2_SECRET_KEY}
+    bucket-name: ${R2_BUCKET_NAME}

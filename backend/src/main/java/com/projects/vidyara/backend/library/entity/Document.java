@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "documents")
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -34,7 +35,8 @@ public class Document {
 
     private UUID userId;
 
-    private DocumentStatus status ;
+    @Enumerated(EnumType.STRING)
+    private DocumentStatus status;
 
     private Instant uploadedAt;
     private Instant updatedAt;

@@ -15,6 +15,8 @@ public interface DocumentService {
 
     DocumentResponse getDocument(UUID id);
 
+    String downloadDocument(UUID documentId) ;
+
     List<DocumentResponse> getAllDocuments();
 
     void deleteDocument(UUID id);
